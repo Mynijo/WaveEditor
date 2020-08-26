@@ -129,10 +129,6 @@ namespace WaveEditor
             listBox_EnemysSettings.Items.Clear();
             if (listBox_Enemys.SelectedIndex >= 0 && listBox_Enemys.SelectedIndex < instances.Count)
             {
-                numericUpDown_Delay.Value = instances[listBox_Enemys.SelectedIndex].delay;
-                numericUpDown_POSx.Value = (instances[listBox_Enemys.SelectedIndex].pos != null) ? instances[listBox_Enemys.SelectedIndex].pos[0] : 0;
-                numericUpDown_POSy.Value = (instances[listBox_Enemys.SelectedIndex].pos != null) ? instances[listBox_Enemys.SelectedIndex].pos[1] : 0;
-
                 if (instances[listBox_Enemys.SelectedIndex].enemySettings != null)
                 {
                     foreach (var setting in instances[listBox_Enemys.SelectedIndex].enemySettings)
@@ -367,102 +363,119 @@ namespace WaveEditor
         private void button_WavePfadeFinder_Click(object sender, EventArgs e)
         {
             // Displays an OpenFileDialog so the user can select a Cursor.  
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "Wave Files|*.json";
-            openFileDialog1.Title = "Select a Cursor File";
+            OpenFileDialog FileDialog = new OpenFileDialog();
+            FileDialog.Filter = "Wave Files|*.json";
+            FileDialog.Title = "Select a Cursor File";
+
+            FileDialog.FileName = textBox_EggName.Text + ".json";
 
             // Show the Dialog.  
             // If the user clicked OK in the dialog and  
             // a .CUR file was selected, open it.  
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (FileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                textBox_WavePfade.Text = openFileDialog1.FileName;
+                textBox_WavePfade.Text = FileDialog.FileName;
             }
         }
+        private void button_save_WavePfadeFinder_Click(object sender, EventArgs e)
+        {
+            // Displays an OpenFileDialog so the user can select a Cursor.  
+            SaveFileDialog FileDialog = new SaveFileDialog();
+            FileDialog.Filter = "Wave Files|*.json";
+            FileDialog.Title = "Select a Cursor File";
 
+            FileDialog.FileName = textBox_EggName.Text + ".json";
+
+            // Show the Dialog.  
+            // If the user clicked OK in the dialog and  
+            // a .CUR file was selected, open it.  
+            if (FileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                textBox_WavePfade.Text = FileDialog.FileName;
+            }
+        }
         private void button_SaveWave_Click(object sender, EventArgs e)
         {
             if (textBox_WavePfade.Text == "")
             {
-                button_WavePfadeFinder_Click(sender, e);
+                button_save_WavePfadeFinder_Click(sender, e);
                 if (textBox_WavePfade.Text == "") return;
             }
 
             List<string> lines = new List<string>();
-            lines.Add("[");
+            lines.Add("{");
+
+            string eggName = "\"eggName\" : \" " + textBox_EggName.Text + "\" ,";
+            lines.Add(eggName);
+
+            string tier = "\"tier\" : " +  numericUpDown_Tier.Value + " ,";
+            lines.Add(tier);
+
+            string small_boss = "\"small_boss\" : " + (checkBox_small_boss.Checked ? "true" : "false") + " ,";
+            lines.Add(small_boss);
+
+            string boss = "\"boss\" : " + (checkBox_Boss.Checked ? "true" : "false") + " ,";
+            lines.Add(boss);
+
+            lines.Add("\"enemeys\" : [");
+
             foreach (var inc in instances)
             {
-                string enemyName = "\"" + "res:" + "\\Enemy\\Enemys\\" + inc.enemy + "\"";
-                string enemySettings = "[";
+                lines.Add("{");
 
+                string packed_scene = "\"packed_scene\" : " + "\"res:\\\\Enemy\\Enemys\\" + inc.enemy + "\" ,";
+                packed_scene = packed_scene.Replace("\\", "/");
+                lines.Add(packed_scene);
+
+                lines.Add("\"not_default_values\" : ");
+                lines.Add("{");
                 foreach (var setting in inc.enemySettings)
                 {
-                    if (setting.value != "" && setting.value != null) enemySettings += "[\"" + setting.settingName + "\"," + setting.value + "],";
+                    string enemySettings = "";
+                    if (setting.value != "" && setting.value != null)
+                    {
+                        enemySettings += "\"" + setting.settingName + "\" :" + setting.value + ",";
+                        lines.Add(enemySettings);
+                    }
                 }
-                enemySettings = enemySettings == "[" ? "[[null, null]]" : enemySettings + "]";
+                lines.Add("},");
 
-                string enemyEffects = "[";
+
+                lines.Add("\"effects\" : ");
+                lines.Add("[");
+
 
                 foreach (var effect in inc.effects)
                 {
-                    enemyEffects += "[\"" + "res:" + "\\effects\\" + effect.effectName + "\"";
-                    string enemyEffectSetting = "[";
+                    lines.Add("{");
+                    string effect_packed_scene = "\"packed_scene\" : " + "\"res:\\\\Effects\\" + effect.effectName + "\" ,";
+                    effect_packed_scene = effect_packed_scene.Replace("\\", "/");
+                    lines.Add(effect_packed_scene);
+
+                    lines.Add("\"not_default_values\" : ");
+                    lines.Add("{");
+
                     foreach (var setting in effect.effectSettings)
                     {
-                        if (setting.value != "" && setting.value != null) enemyEffectSetting += "[\"" + setting.settingName + "\"," + setting.value + ",null],";
+                        string enemyEffectSetting = "";
+                        if (setting.value != "" && setting.value != null)
+                        {
+                            enemyEffectSetting += "\"" + setting.settingName + "\" :" + setting.value + ",";
+                            lines.Add(enemyEffectSetting);
+                        }
                     }
-                    foreach (var condition in effect.conditions)
-                    {
-                        if (condition.value != "") enemyEffectSetting += "[" + "\"condition\"," + condition.conditionIndex + "," + condition.value + "],";
-                    }
-                    enemyEffectSetting = enemyEffectSetting == "[" ? "[[null,null,null]]" : enemyEffectSetting + "]";
-                    enemyEffects += "," + enemyEffectSetting + "],";
-
+                    lines.Add("}");
+                    lines.Add("},");
                 }
-                enemyEffects = enemyEffects == "[" ? "[[null,[[null,null,null]]]]" : enemyEffects + "]";
+                lines.Add("],");
 
-                string pos = (inc.pos != null && inc.pos[0] + inc.pos[0] > 0) ? "[" + inc.pos[0].ToString() + "," + inc.pos[1].ToString() + "]" : "null";
-                string delay = (inc.delay != null && inc.delay > 0) ? inc.delay.ToString() : "0";
 
-                string line = "[[" + enemyName + "," + enemySettings + "]," + enemyEffects + "," + delay + "," + pos + "],";
-                line = line.Replace("\\", "//");
-                lines.Add(line);
+                lines.Add("},");
             }
             lines.Add("]");
 
-
+            lines.Add("}");
             System.IO.File.WriteAllLines(textBox_WavePfade.Text, lines);
-        }
-
-        private void numericUpDown_Delay_ValueChanged(object sender, EventArgs e)
-        {
-            s_instance inc = instances[listBox_Enemys.SelectedIndex];
-            int index = listBox_Enemys.SelectedIndex;
-            instances.RemoveAt(index);
-            inc.delay = numericUpDown_Delay.Value;
-            instances.Insert(index, inc);
-        }
-
-        private void numericUpDown_POSx_ValueChanged(object sender, EventArgs e)
-        {
-            s_instance inc = instances[listBox_Enemys.SelectedIndex];
-            int index = listBox_Enemys.SelectedIndex;
-            instances.RemoveAt(index);
-            inc.pos = new List<int>();
-            inc.pos.Add((int)numericUpDown_POSx.Value);
-            inc.pos.Add((int)numericUpDown_POSy.Value);
-            instances.Insert(index, inc);
-        }
-
-        private void numericUpDown_POSy_ValueChanged(object sender, EventArgs e)
-        {
-            s_instance inc = instances[listBox_Enemys.SelectedIndex];
-            int index = listBox_Enemys.SelectedIndex;
-            instances.RemoveAt(index);
-            inc.pos = new List<int>();
-            inc.pos.Add((int)numericUpDown_POSx.Value);
-            inc.pos.Add((int)numericUpDown_POSy.Value);
-            instances.Insert(index, inc);
         }
 
         private void button_LoadWave_Click(object sender, EventArgs e)
@@ -478,5 +491,20 @@ namespace WaveEditor
 
 
         }
-    }
+
+		private void tableLayoutPanel9_Paint(object sender, PaintEventArgs e)
+		{
+
+		}
+
+		private void checkBox1_CheckedChanged(object sender, EventArgs e)
+		{
+            if(checkBox_Boss.Checked) checkBox_Boss.Checked = false;
+        }
+
+		private void checkBox_Boss_CheckedChanged(object sender, EventArgs e)
+		{
+            if (checkBox_small_boss.Checked) checkBox_small_boss.Checked = false;
+        }
+	}
 }
