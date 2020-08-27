@@ -22,8 +22,7 @@ namespace WaveEditor
     public struct s_condition
     {
         public string conditionName;
-        public string conditionIndex;
-        public string value;
+        public List<s_settings> conditionSettings;
     }
 
     public struct s_effect
@@ -74,24 +73,17 @@ namespace WaveEditor
             }
             comboBox_Effects.SelectedIndex = 0;
 
-            string line;
 
-            // Read the file and display it line by line.  
-            System.IO.StreamReader file =
-                new System.IO.StreamReader(textBox_GamePfade.Text + "\\effects\\scripts\\StatusEffect.gd");
-            while ((line = file.ReadLine()) != null)
+            ParentDirectory = new System.IO.DirectoryInfo(textBox_GamePfade.Text + "\\effects\\conditions");
+
+            foreach (System.IO.FileInfo f in ParentDirectory.GetFiles())
             {
-                if (line.Contains("enum e_condition{"))
+                if (f.Name != "Condition.tscn" && f.Name != "Conditions.tscn")
                 {
-                    while ((line = file.ReadLine()) != null)
-                    {
-                        if (line.Contains("}")) break;
-                        comboBox_EffectsCondtion.Items.Add(line.Trim());
-                    }
+                    comboBox_EffectsCondtion.Items.Add(f.Name);
                 }
             }
             comboBox_EffectsCondtion.SelectedIndex = 0;
-
 
         }
 
@@ -173,7 +165,7 @@ namespace WaveEditor
             s_settings set = instances[listBox_Enemys.SelectedIndex].enemySettings[listBox_EnemysSettings.SelectedIndex];
             instances[listBox_Enemys.SelectedIndex].enemySettings.Remove(instances[listBox_Enemys.SelectedIndex].enemySettings[listBox_EnemysSettings.SelectedIndex]);
             listBox_EnemysSettings.Items.RemoveAt(listBox_EnemysSettings.SelectedIndex);
-            set.value = textBox_EnemysSettingsValue.Text;
+            set.value = textBox_EnemysSettingsValue.Text.Replace(",", ".");
             textBox_EnemysSettingsValue.Text = "";
             instances[listBox_Enemys.SelectedIndex].enemySettings.Add(set);
             listBox_EnemysSettings.Items.Add(set.settingName + (set.value != "" && set.value != null ? " (" + set.value + ")" : ""));
@@ -211,15 +203,26 @@ namespace WaveEditor
                         listBox_EffectsSettings.Items.Add(setting.settingName + (setting.value != "" && setting.value != null ? " (" + setting.value + ")" : ""));
                     }
                 }
-                button_AddEffectsCondition.Enabled = true;
+            }
+
+            listBox_EffectsCondition.Items.Clear();
+            listBox_ConditionsSettings.Items.Clear();
+            textBox_EffectsCondtionsValue.Text = "";
+            textBox_EffectsCondtionsValueType.Text = "";
+            button_SaveConditionsSettings.Enabled = false;
+            if (listBox_Effects.SelectedIndex >= 0 && listBox_Effects.SelectedIndex < instances[listBox_Enemys.SelectedIndex].effects.Count)
+            {
                 if (instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions != null)
                 {
-                    foreach (var conditions in instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions)
+                    foreach (var condition in instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions)
                     {
-                        listBox_EffectsCondition.Items.Add(conditions.conditionName + (conditions.value != "" && conditions.value != null ? " (" + conditions.value + ")" : ""));
+                        listBox_EffectsCondition.Items.Add(condition.conditionName);
                     }
                 }
+                button_AddEffectsCondition.Enabled = true;
             }
+
+
         }
 
         private s_instance addSettingsToInstance(s_instance _inc)
@@ -297,6 +300,55 @@ namespace WaveEditor
             return _effect;
         }
 
+        private s_condition addSettingsToCondition(s_condition _condition)
+        {
+            string line;
+
+            _condition.conditionSettings = new List<s_settings>();
+
+            // Read the file and display it line by line.  
+            System.IO.StreamReader file =
+                new System.IO.StreamReader(textBox_GamePfade.Text + "\\effects\\conditions\\scripts\\Condition.gd");
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Contains("export"))
+                {
+                    s_settings set = new s_settings();
+                    set.valueType = line.Substring(line.IndexOf('(') + 1, line.IndexOf(')') - (line.IndexOf('(') + 1));
+                    int varEnd = line.IndexOf("var") + 4;
+                    set.settingName = line.Substring(varEnd, (line.IndexOf(' ', varEnd) > 0 ? line.IndexOf(' ', varEnd) : line.Length) - varEnd);
+                    _condition.conditionSettings.Add(set);
+                }
+            }
+
+            file.Close();
+
+            try
+            {
+                file = new System.IO.StreamReader(textBox_GamePfade.Text + "\\effects\\conditions\\scripts\\" + _condition.conditionName.Substring(0, _condition.conditionName.Length - 4) + "gd");
+                while ((line = file.ReadLine()) != null)
+                {
+                    if (line.Contains("export"))
+                    {
+                        s_settings set = new s_settings();
+                        set.valueType = line.Substring(line.IndexOf('(') + 1, line.IndexOf(')') - (line.IndexOf('(') + 1));
+                        int varEnd = line.IndexOf("var") + 4;
+                        set.settingName = line.Substring(varEnd, (line.IndexOf(' ', varEnd) > 0 ? line.IndexOf(' ', varEnd) : line.Length) - varEnd);
+                        _condition.conditionSettings.Add(set);
+                    }
+                }
+
+                file.Close();
+            }
+            catch
+            {
+
+            }
+
+
+            return _condition;
+        }
+
         private void listBox_EffectsSettings_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox_EffectsSettings.SelectedIndex >= 0 && listBox_EffectsSettings.SelectedIndex < instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].effectSettings.Count)
@@ -313,7 +365,7 @@ namespace WaveEditor
             s_settings set = instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].effectSettings[listBox_EffectsSettings.SelectedIndex];
             instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].effectSettings.Remove(instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].effectSettings[listBox_EffectsSettings.SelectedIndex]);
             listBox_EffectsSettings.Items.RemoveAt(listBox_EffectsSettings.SelectedIndex);
-            set.value = textBox_EffectsSettingsValue.Text;
+            set.value = textBox_EffectsSettingsValue.Text.Replace(",", ".");
             textBox_EffectsSettingsValue.Text = "";
             instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].effectSettings.Add(set);
             listBox_EffectsSettings.Items.Add(set.settingName + (set.value != "" && set.value != null ? " (" + set.value + ")" : ""));
@@ -334,7 +386,20 @@ namespace WaveEditor
 
         private void listBox_EffectsCondition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            button_AddEffectsCondition.Enabled = true;
+            listBox_ConditionsSettings.Items.Clear();
+            if (listBox_EffectsCondition.SelectedIndex >= 0 && listBox_EffectsCondition.SelectedIndex < instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions.Count)
+            {
+                if (instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions[listBox_EffectsCondition.SelectedIndex].conditionSettings != null)
+                {
+                    foreach (var setting in instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions[listBox_EffectsCondition.SelectedIndex].conditionSettings)
+                    {
+                        listBox_ConditionsSettings.Items.Add(setting.settingName + (setting.value != "" && setting.value != null ? " (" + setting.value + ")" : ""));
+                    }
+                }
+            }
+            textBox_EffectsCondtionsValue.Text = "";
+            textBox_EffectsCondtionsValueType.Text = "";
+            button_SaveConditionsSettings.Enabled = false;
         }
 
         private void button_AddEffectsCondition_Click(object sender, EventArgs e)
@@ -343,9 +408,8 @@ namespace WaveEditor
             {
                 s_condition condition = new s_condition();
                 condition.conditionName = comboBox_EffectsCondtion.SelectedItem.ToString();
-                condition.value = textBox_EffectsCondtionsValue.Text;
-                condition.conditionIndex = (comboBox_EffectsCondtion.SelectedIndex).ToString();
-                listBox_EffectsCondition.Items.Add(condition.conditionName + (condition.value != "" && condition.value != null ? " (" + condition.value + ")" : ""));
+                listBox_EffectsCondition.Items.Add(condition.conditionName);
+                condition = addSettingsToCondition(condition);
                 instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions.Add(condition);
             }
         }
@@ -357,6 +421,9 @@ namespace WaveEditor
                 int index = listBox_EffectsCondition.SelectedIndex;
                 instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions.RemoveAt(index);
                 listBox_EffectsCondition.Items.Remove(listBox_EffectsCondition.SelectedItem);
+                textBox_EffectsCondtionsValueType.Text = "";
+                textBox_EffectsCondtionsValue.Text = "";
+                button_SaveConditionsSettings.Enabled = false;
             }
         }
 
@@ -464,7 +531,34 @@ namespace WaveEditor
                             lines.Add(enemyEffectSetting);
                         }
                     }
-                    lines.Add("}");
+                    lines.Add("},");
+
+                    lines.Add("\"conditions\" : ");
+                    lines.Add("[");
+                    foreach (var condition in effect.conditions)
+                    {
+                        lines.Add("{");
+                        string conditio_packed_scene = "\"packed_scene\" : " + "\"res:\\\\Effects\\conditions\\" + condition.conditionName + "\" ,";
+                        conditio_packed_scene = conditio_packed_scene.Replace("\\", "/");
+                        lines.Add(conditio_packed_scene);
+
+                        lines.Add("\"not_default_values\" : ");
+                        lines.Add("{");
+
+                        foreach (var setting in condition.conditionSettings)
+                        {
+                            string conditionSetting = "";
+                            if (setting.value != "" && setting.value != null)
+                            {
+                                conditionSetting += "\"" + setting.settingName + "\" :" + setting.value + ",";
+                                lines.Add(conditionSetting);
+                            }
+                        }
+                        lines.Add("}");
+                        lines.Add("},");
+                    }
+                    lines.Add("],");
+
                     lines.Add("},");
                 }
                 lines.Add("],");
@@ -487,12 +581,18 @@ namespace WaveEditor
             }
             string json = System.IO.File.ReadAllText(textBox_WavePfade.Text);
 
+            List<Dictionary<string, string>> ValueList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(json);
+
+            //dynamic json_dyn_obj = JsonConvert.DeserializeObject(json);
+            //textBox_EggName.Text = json_dyn_obj["eggName"];
+
+
             // var deserializedProduct = JsonConvert.DeserializeObject<List<List<string>>>(json);
 
 
         }
 
-		private void tableLayoutPanel9_Paint(object sender, PaintEventArgs e)
+        private void tableLayoutPanel9_Paint(object sender, PaintEventArgs e)
 		{
 
 		}
@@ -506,5 +606,37 @@ namespace WaveEditor
 		{
             if (checkBox_small_boss.Checked) checkBox_small_boss.Checked = false;
         }
-	}
+
+        private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void listBox_ConditionsSettings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBox_ConditionsSettings.SelectedIndex >= 0 && listBox_ConditionsSettings.SelectedIndex < instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions[listBox_EffectsCondition.SelectedIndex].conditionSettings.Count)
+            {
+                textBox_EffectsCondtionsValueType.Text = instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions[listBox_EffectsCondition.SelectedIndex].conditionSettings[listBox_ConditionsSettings.SelectedIndex].valueType;
+                textBox_EffectsCondtionsValue.Text      = instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions[listBox_EffectsCondition.SelectedIndex].conditionSettings[listBox_ConditionsSettings.SelectedIndex].value;
+                button_SaveConditionsSettings.Enabled = true;
+            }
+        }
+
+        private void button_SaveConditionsSettings_Click(object sender, EventArgs e)
+        {
+            if (listBox_ConditionsSettings.SelectedIndex == -1) return;
+            s_settings set = instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions[listBox_EffectsCondition.SelectedIndex].conditionSettings[listBox_ConditionsSettings.SelectedIndex];
+            instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions[listBox_EffectsCondition.SelectedIndex].conditionSettings.Remove(instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions[listBox_EffectsCondition.SelectedIndex].conditionSettings[listBox_ConditionsSettings.SelectedIndex]);
+            listBox_ConditionsSettings.Items.RemoveAt(listBox_ConditionsSettings.SelectedIndex);
+            set.value = textBox_EffectsCondtionsValue.Text.Replace(",", ".");
+            textBox_EffectsCondtionsValue.Text = "";
+            instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions[listBox_EffectsCondition.SelectedIndex].conditionSettings.Add(set);
+            listBox_ConditionsSettings.Items.Add(set.settingName + (set.value != "" && set.value != null ? " (" + set.value + ")" : ""));
+        }
+    }
 }
