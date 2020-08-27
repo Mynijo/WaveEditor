@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WaveEditor
 {
@@ -41,7 +42,6 @@ namespace WaveEditor
         public List<int> pos;
     }
 
-
     public partial class Form1 : Form
     {
         private string enemyPfade = "\\Enemy\\Enemys";
@@ -51,7 +51,138 @@ namespace WaveEditor
         {
             InitializeComponent();
         }
+        public class DictionaryConverter : JsonConverter
+        {
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) { this.WriteValue(writer, value); }
 
+            private void WriteValue(JsonWriter writer, object value)
+            {
+                var t = JToken.FromObject(value);
+                switch (t.Type)
+                {
+                    case JTokenType.Object:
+                        this.WriteObject(writer, value);
+                        break;
+                    case JTokenType.Array:
+                        this.WriteArray(writer, value);
+                        break;
+                    default:
+                        writer.WriteValue(value);
+                        break;
+                }
+            }
+
+            private void WriteObject(JsonWriter writer, object value)
+            {
+                writer.WriteStartObject();
+                var obj = value as IDictionary<string, object>;
+                foreach (var kvp in obj)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    this.WriteValue(writer, kvp.Value);
+                }
+                writer.WriteEndObject();
+            }
+
+            private void WriteArray(JsonWriter writer, object value)
+            {
+                writer.WriteStartArray();
+                var array = value as IEnumerable<object>;
+                foreach (var o in array)
+                {
+                    this.WriteValue(writer, o);
+                }
+                writer.WriteEndArray();
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                return ReadValue(reader);
+            }
+
+            private object ReadValue(JsonReader reader)
+            {
+                while (reader.TokenType == JsonToken.Comment)
+                {
+                    if (!reader.Read()) throw new JsonSerializationException("Unexpected Token when converting IDictionary<string, object>");
+                }
+
+                switch (reader.TokenType)
+                {
+                    case JsonToken.StartObject:
+                        return ReadObject(reader);
+                    case JsonToken.StartArray:
+                        return this.ReadArray(reader);
+                    case JsonToken.Integer:
+                    case JsonToken.Float:
+                    case JsonToken.String:
+                    case JsonToken.Boolean:
+                    case JsonToken.Undefined:
+                    case JsonToken.Null:
+                    case JsonToken.Date:
+                    case JsonToken.Bytes:
+                        return reader.Value;
+                    default:
+                        throw new JsonSerializationException
+                            (string.Format("Unexpected token when converting IDictionary<string, object>: {0}", reader.TokenType));
+                }
+            }
+
+            private object ReadArray(JsonReader reader)
+            {
+                IList<object> list = new List<object>();
+
+                while (reader.Read())
+                {
+                    switch (reader.TokenType)
+                    {
+                        case JsonToken.Comment:
+                            break;
+                        default:
+                            var v = ReadValue(reader);
+
+                            list.Add(v);
+                            break;
+                        case JsonToken.EndArray:
+                            return list;
+                    }
+                }
+
+                throw new JsonSerializationException("Unexpected end when reading IDictionary<string, object>");
+            }
+
+            private object ReadObject(JsonReader reader)
+            {
+                var obj = new Dictionary<string, object>();
+
+                while (reader.Read())
+                {
+                    switch (reader.TokenType)
+                    {
+                        case JsonToken.PropertyName:
+                            var propertyName = reader.Value.ToString();
+
+                            if (!reader.Read())
+                            {
+                                throw new JsonSerializationException("Unexpected end when reading IDictionary<string, object>");
+                            }
+
+                            var v = ReadValue(reader);
+
+                            obj[propertyName] = v;
+                            break;
+                        case JsonToken.Comment:
+                            break;
+                        case JsonToken.EndObject:
+                            return obj;
+                    }
+                }
+
+                throw new JsonSerializationException("Unexpected end when reading IDictionary<string, object>");
+            }
+
+            public override bool CanConvert(Type objectType) { return typeof(IDictionary<string, object>).IsAssignableFrom(objectType); }
+        }
         private void button_LoadGame_Click(object sender, EventArgs e)
         {
             System.IO.DirectoryInfo ParentDirectory = new System.IO.DirectoryInfo(textBox_GamePfade.Text + "\\Enemy\\Enemys");
@@ -85,21 +216,28 @@ namespace WaveEditor
             }
             comboBox_EffectsCondtion.SelectedIndex = 0;
 
+            button_LoadWave.Enabled = true;
+            button_SaveWave.Enabled = true;
         }
+
 
         private void button_AddEnemy_Click(object sender, EventArgs e)
         {
             if (comboBox_Enemys.SelectedItem != null)
             {
-                s_instance inc = new s_instance();
-                inc.enemy = comboBox_Enemys.SelectedItem.ToString();
-                listBox_Enemys.Items.Add(inc.enemy);
-                inc.effects = new List<s_effect>();
-                inc = addSettingsToInstance(inc);
-                instances.Add(inc);
+                AddEnemy(comboBox_Enemys.SelectedItem.ToString());
             }
 
 
+        }
+        private void AddEnemy(string enemyName)
+        {
+            s_instance inc = new s_instance();
+            inc.enemy = enemyName;
+            listBox_Enemys.Items.Add(inc.enemy);
+            inc.effects = new List<s_effect>();
+            inc = addSettingsToInstance(inc);
+            instances.Add(inc);
         }
 
         private void button_Delete_Enemy_Click(object sender, EventArgs e)
@@ -175,13 +313,17 @@ namespace WaveEditor
         {
             if (comboBox_Effects.SelectedItem != null)
             {
-                s_effect effect = new s_effect();
-                effect.effectName = comboBox_Effects.SelectedItem.ToString();
-                listBox_Effects.Items.Add(effect.effectName);
-                effect = addSettingsToEffect(effect);
-                effect.conditions = new List<s_condition>();
-                instances[listBox_Enemys.SelectedIndex].effects.Add(effect);
+                AddEffect(comboBox_Effects.SelectedItem.ToString());
             }
+        }
+        private void AddEffect(string effectName)
+        {
+            s_effect effect = new s_effect();
+            effect.effectName = effectName; 
+            listBox_Effects.Items.Add(effect.effectName);
+            effect = addSettingsToEffect(effect);
+            effect.conditions = new List<s_condition>();
+            instances[listBox_Enemys.SelectedIndex].effects.Add(effect);
         }
 
         private void listBox_Effects_SelectedIndexChanged(object sender, EventArgs e)
@@ -406,12 +548,17 @@ namespace WaveEditor
         {
             if (comboBox_EffectsCondtion.SelectedItem != null)
             {
-                s_condition condition = new s_condition();
-                condition.conditionName = comboBox_EffectsCondtion.SelectedItem.ToString();
-                listBox_EffectsCondition.Items.Add(condition.conditionName);
-                condition = addSettingsToCondition(condition);
-                instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions.Add(condition);
+                AddEffectsCondition(comboBox_EffectsCondtion.SelectedItem.ToString());
             }
+        }
+
+        private void AddEffectsCondition(string name)
+        {
+            s_condition condition = new s_condition();
+            condition.conditionName = name;
+            listBox_EffectsCondition.Items.Add(condition.conditionName);
+            condition = addSettingsToCondition(condition);
+            instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions.Add(condition);
         }
 
         private void button_DeleteEffectsCondition_Click(object sender, EventArgs e)
@@ -570,27 +717,10 @@ namespace WaveEditor
 
             lines.Add("}");
             System.IO.File.WriteAllLines(textBox_WavePfade.Text, lines);
-        }
-
-        private void button_LoadWave_Click(object sender, EventArgs e)
-        {
-            if (textBox_WavePfade.Text == "")
-            {
-                button_WavePfadeFinder_Click(sender, e);
-                if (textBox_WavePfade.Text == "") return;
-            }
-            string json = System.IO.File.ReadAllText(textBox_WavePfade.Text);
-
-            List<Dictionary<string, string>> ValueList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(json);
-
-            //dynamic json_dyn_obj = JsonConvert.DeserializeObject(json);
-            //textBox_EggName.Text = json_dyn_obj["eggName"];
-
-
-            // var deserializedProduct = JsonConvert.DeserializeObject<List<List<string>>>(json);
-
 
         }
+
+
 
         private void tableLayoutPanel9_Paint(object sender, PaintEventArgs e)
 		{
@@ -638,5 +768,125 @@ namespace WaveEditor
             instances[listBox_Enemys.SelectedIndex].effects[listBox_Effects.SelectedIndex].conditions[listBox_EffectsCondition.SelectedIndex].conditionSettings.Add(set);
             listBox_ConditionsSettings.Items.Add(set.settingName + (set.value != "" && set.value != null ? " (" + set.value + ")" : ""));
         }
+
+
+        private void button_LoadWave_Click(object sender, EventArgs e)
+        {
+            if (textBox_WavePfade.Text == "")
+            {
+                button_WavePfadeFinder_Click(sender, e);
+                if (textBox_WavePfade.Text == "") return;
+            }
+            string json = System.IO.File.ReadAllText(textBox_WavePfade.Text);
+
+            instances.Clear();
+            listBox_Enemys.Items.Clear();
+
+            IDictionary<string, object> json_Dic = JsonConvert.DeserializeObject<IDictionary<string, object>>(json, new DictionaryConverter());
+
+            object value = "";
+            json_Dic.TryGetValue("eggName", out value);
+            textBox_EggName.Text = (string)(value);
+
+            json_Dic.TryGetValue("small_boss", out value);
+            checkBox_small_boss.Checked = (bool)(value);
+
+            json_Dic.TryGetValue("boss", out value);
+            checkBox_Boss.Checked = (bool)(value);
+
+            json_Dic.TryGetValue("tier", out value);
+            numericUpDown_Tier.Value = (long)(value);
+
+            json_Dic.TryGetValue("enemeys", out value);
+
+            int i = 0;
+            foreach (IDictionary<string, object> enemy in (List<object>)value)
+            {
+                object value_enemy = "";
+                string temp_names = "";
+                int temp_counter = 0;
+                enemy.TryGetValue("packed_scene", out value);
+                temp_names = (string)(value);
+                temp_counter = temp_names.LastIndexOf('/') +1;
+                temp_names = temp_names.Substring(temp_counter, temp_names.Length - temp_counter);
+
+                AddEnemy(temp_names);
+                listBox_Enemys.SelectedIndex = i;
+                listBox_Enemys_SelectedIndexChanged(null, null);
+
+
+                object value_enemy_settings = "";
+                enemy.TryGetValue("not_default_values", out value_enemy_settings);
+
+                foreach (var setting in (IDictionary<string, object>)value_enemy_settings)
+                {
+                    listBox_EnemysSettings.SelectedIndex = listBox_EnemysSettings.Items.IndexOf(setting.Key);
+                    textBox_EnemysSettingsValue.Text = ((object)setting.Value).ToString();
+                    button_SaveEnemysSettings_Click(null, null);
+                }
+
+                object value_enemy_effects = "";
+                enemy.TryGetValue("effects", out value_enemy_effects);
+
+                int n = 0;
+                foreach (IDictionary<string, object> effect in (List<object>)value_enemy_effects)
+                {
+                    effect.TryGetValue("packed_scene", out value);
+                    temp_names = (string)(value);
+                    temp_counter = temp_names.LastIndexOf('/') + 1;
+                    temp_names = temp_names.Substring(temp_counter, temp_names.Length - temp_counter);
+                    AddEffect(temp_names);
+                    listBox_Effects.SelectedIndex = n;
+                    listBox_Effects_SelectedIndexChanged(null, null);
+
+                    object value_enemy_effects_settings = "";
+                    effect.TryGetValue("not_default_values", out value_enemy_effects_settings);
+                    foreach (var effect_setting in (IDictionary<string, object>)value_enemy_effects_settings)
+                    {
+                        listBox_EffectsSettings.SelectedIndex = listBox_EffectsSettings.Items.IndexOf(effect_setting.Key);
+                        textBox_EffectsSettingsValue.Text = ((object)effect_setting.Value).ToString();
+                        button_SaveEffectsSettings_Click(null, null);
+                    }
+
+
+                    object value_enemy_effects_conditions = "";
+                    effect.TryGetValue("conditions", out value_enemy_effects_conditions);
+
+                    int x = 0;
+                    foreach (IDictionary<string, object> condition in (List<object>)value_enemy_effects_conditions)
+                    {
+                        condition.TryGetValue("packed_scene", out value);
+                        temp_names = (string)(value);
+                        temp_counter = temp_names.LastIndexOf('/') + 1;
+                        temp_names = temp_names.Substring(temp_counter, temp_names.Length - temp_counter);
+                        AddEffectsCondition(temp_names);
+                        listBox_EffectsCondition.SelectedIndex = x;
+                        listBox_EffectsCondition_SelectedIndexChanged(null, null);
+
+                        object value_enemy_effects_condition_settings = "";
+                        condition.TryGetValue("not_default_values", out value_enemy_effects_condition_settings);
+                        foreach (var condition_setting in (IDictionary<string, object>)value_enemy_effects_condition_settings)
+                        {
+                            listBox_ConditionsSettings.SelectedIndex = listBox_ConditionsSettings.Items.IndexOf(condition_setting.Key);
+                            textBox_EffectsCondtionsValue.Text = ((object)condition_setting.Value).ToString();
+                            button_SaveConditionsSettings_Click(null, null);
+                        }
+
+                        x++;
+                    }
+
+                    n++;
+                }
+
+
+                //instances.Add(temp_enemy);
+                ++i;
+            }
+        }
+
+
+
     }
+
+    
 }

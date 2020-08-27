@@ -47,19 +47,24 @@
             this.textBox_EnemysSettingsValueType = new System.Windows.Forms.TextBox();
             this.listBox_Enemys = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.button_AddEffectsCondition = new System.Windows.Forms.Button();
+            this.button_DeleteEffectsCondition = new System.Windows.Forms.Button();
             this.listBox_Effects = new System.Windows.Forms.ListBox();
+            this.comboBox_EffectsCondtion = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
             this.button_SaveEffectsSettings = new System.Windows.Forms.Button();
             this.textBox_EffectsSettingsValue = new System.Windows.Forms.TextBox();
             this.textBox_EffectsSettingsValueType = new System.Windows.Forms.TextBox();
             this.listBox_EffectsSettings = new System.Windows.Forms.ListBox();
-            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
-            this.button_AddEffectsCondition = new System.Windows.Forms.Button();
-            this.button_DeleteEffectsCondition = new System.Windows.Forms.Button();
-            this.comboBox_EffectsCondtion = new System.Windows.Forms.ComboBox();
-            this.textBox_EffectsCondtionsValue = new System.Windows.Forms.TextBox();
             this.listBox_EffectsCondition = new System.Windows.Forms.ListBox();
+            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
+            this.listBox_ConditionsSettings = new System.Windows.Forms.ListBox();
+            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox_EffectsCondtionsValueType = new System.Windows.Forms.TextBox();
+            this.textBox_EffectsCondtionsValue = new System.Windows.Forms.TextBox();
+            this.button_SaveConditionsSettings = new System.Windows.Forms.Button();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.button_AddEnemy = new System.Windows.Forms.Button();
             this.comboBox_Enemys = new System.Windows.Forms.ComboBox();
@@ -75,11 +80,6 @@
             this.button_LoadWave = new System.Windows.Forms.Button();
             this.textBox_GamePfade = new System.Windows.Forms.TextBox();
             this.button_WavePfadeFinder = new System.Windows.Forms.Button();
-            this.listBox_ConditionsSettings = new System.Windows.Forms.ListBox();
-            this.textBox_EffectsCondtionsValueType = new System.Windows.Forms.TextBox();
-            this.button_SaveConditionsSettings = new System.Windows.Forms.Button();
-            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -89,14 +89,14 @@
             this.tableLayoutPanel9.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel15.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
-            this.tableLayoutPanel15.SuspendLayout();
+            this.tableLayoutPanel14.SuspendLayout();
+            this.tableLayoutPanel16.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
-            this.tableLayoutPanel14.SuspendLayout();
-            this.tableLayoutPanel16.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -233,7 +233,7 @@
             0,
             0});
             this.numericUpDown_Tier.Name = "numericUpDown_Tier";
-            this.numericUpDown_Tier.Size = new System.Drawing.Size(32, 20);
+            this.numericUpDown_Tier.Size = new System.Drawing.Size(58, 20);
             this.numericUpDown_Tier.TabIndex = 1;
             this.numericUpDown_Tier.Value = new decimal(new int[] {
             1,
@@ -362,6 +362,43 @@
             this.tableLayoutPanel4.TabIndex = 1;
             this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
             // 
+            // tableLayoutPanel15
+            // 
+            this.tableLayoutPanel15.ColumnCount = 2;
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel15.Controls.Add(this.button_AddEffectsCondition, 0, 0);
+            this.tableLayoutPanel15.Controls.Add(this.button_DeleteEffectsCondition, 1, 0);
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(198, 204);
+            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
+            this.tableLayoutPanel15.RowCount = 1;
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(187, 28);
+            this.tableLayoutPanel15.TabIndex = 0;
+            // 
+            // button_AddEffectsCondition
+            // 
+            this.button_AddEffectsCondition.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_AddEffectsCondition.Enabled = false;
+            this.button_AddEffectsCondition.Location = new System.Drawing.Point(3, 3);
+            this.button_AddEffectsCondition.Name = "button_AddEffectsCondition";
+            this.button_AddEffectsCondition.Size = new System.Drawing.Size(105, 22);
+            this.button_AddEffectsCondition.TabIndex = 0;
+            this.button_AddEffectsCondition.Text = "AddCondition";
+            this.button_AddEffectsCondition.UseVisualStyleBackColor = true;
+            this.button_AddEffectsCondition.Click += new System.EventHandler(this.button_AddEffectsCondition_Click);
+            // 
+            // button_DeleteEffectsCondition
+            // 
+            this.button_DeleteEffectsCondition.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_DeleteEffectsCondition.Location = new System.Drawing.Point(114, 3);
+            this.button_DeleteEffectsCondition.Name = "button_DeleteEffectsCondition";
+            this.button_DeleteEffectsCondition.Size = new System.Drawing.Size(70, 22);
+            this.button_DeleteEffectsCondition.TabIndex = 1;
+            this.button_DeleteEffectsCondition.Text = "Delete";
+            this.button_DeleteEffectsCondition.UseVisualStyleBackColor = true;
+            this.button_DeleteEffectsCondition.Click += new System.EventHandler(this.button_DeleteEffectsCondition_Click);
+            // 
             // listBox_Effects
             // 
             this.listBox_Effects.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -371,6 +408,16 @@
             this.listBox_Effects.Size = new System.Drawing.Size(189, 195);
             this.listBox_Effects.TabIndex = 0;
             this.listBox_Effects.SelectedIndexChanged += new System.EventHandler(this.listBox_Effects_SelectedIndexChanged);
+            // 
+            // comboBox_EffectsCondtion
+            // 
+            this.comboBox_EffectsCondtion.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBox_EffectsCondtion.FormattingEnabled = true;
+            this.comboBox_EffectsCondtion.Location = new System.Drawing.Point(3, 206);
+            this.comboBox_EffectsCondtion.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.comboBox_EffectsCondtion.Name = "comboBox_EffectsCondtion";
+            this.comboBox_EffectsCondtion.Size = new System.Drawing.Size(189, 21);
+            this.comboBox_EffectsCondtion.TabIndex = 2;
             // 
             // tableLayoutPanel12
             // 
@@ -443,61 +490,6 @@
             this.listBox_EffectsSettings.TabIndex = 0;
             this.listBox_EffectsSettings.SelectedIndexChanged += new System.EventHandler(this.listBox_EffectsSettings_SelectedIndexChanged);
             // 
-            // tableLayoutPanel15
-            // 
-            this.tableLayoutPanel15.ColumnCount = 2;
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel15.Controls.Add(this.button_AddEffectsCondition, 0, 0);
-            this.tableLayoutPanel15.Controls.Add(this.button_DeleteEffectsCondition, 1, 0);
-            this.tableLayoutPanel15.Location = new System.Drawing.Point(198, 204);
-            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
-            this.tableLayoutPanel15.RowCount = 1;
-            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(187, 28);
-            this.tableLayoutPanel15.TabIndex = 0;
-            // 
-            // button_AddEffectsCondition
-            // 
-            this.button_AddEffectsCondition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_AddEffectsCondition.Enabled = false;
-            this.button_AddEffectsCondition.Location = new System.Drawing.Point(3, 3);
-            this.button_AddEffectsCondition.Name = "button_AddEffectsCondition";
-            this.button_AddEffectsCondition.Size = new System.Drawing.Size(105, 22);
-            this.button_AddEffectsCondition.TabIndex = 0;
-            this.button_AddEffectsCondition.Text = "AddCondition";
-            this.button_AddEffectsCondition.UseVisualStyleBackColor = true;
-            this.button_AddEffectsCondition.Click += new System.EventHandler(this.button_AddEffectsCondition_Click);
-            // 
-            // button_DeleteEffectsCondition
-            // 
-            this.button_DeleteEffectsCondition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_DeleteEffectsCondition.Location = new System.Drawing.Point(114, 3);
-            this.button_DeleteEffectsCondition.Name = "button_DeleteEffectsCondition";
-            this.button_DeleteEffectsCondition.Size = new System.Drawing.Size(70, 22);
-            this.button_DeleteEffectsCondition.TabIndex = 1;
-            this.button_DeleteEffectsCondition.Text = "Delete";
-            this.button_DeleteEffectsCondition.UseVisualStyleBackColor = true;
-            this.button_DeleteEffectsCondition.Click += new System.EventHandler(this.button_DeleteEffectsCondition_Click);
-            // 
-            // comboBox_EffectsCondtion
-            // 
-            this.comboBox_EffectsCondtion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox_EffectsCondtion.FormattingEnabled = true;
-            this.comboBox_EffectsCondtion.Location = new System.Drawing.Point(3, 206);
-            this.comboBox_EffectsCondtion.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.comboBox_EffectsCondtion.Name = "comboBox_EffectsCondtion";
-            this.comboBox_EffectsCondtion.Size = new System.Drawing.Size(189, 21);
-            this.comboBox_EffectsCondtion.TabIndex = 2;
-            // 
-            // textBox_EffectsCondtionsValue
-            // 
-            this.textBox_EffectsCondtionsValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox_EffectsCondtionsValue.Location = new System.Drawing.Point(68, 3);
-            this.textBox_EffectsCondtionsValue.Name = "textBox_EffectsCondtionsValue";
-            this.textBox_EffectsCondtionsValue.Size = new System.Drawing.Size(62, 20);
-            this.textBox_EffectsCondtionsValue.TabIndex = 3;
-            // 
             // listBox_EffectsCondition
             // 
             this.listBox_EffectsCondition.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -507,6 +499,75 @@
             this.listBox_EffectsCondition.Size = new System.Drawing.Size(189, 138);
             this.listBox_EffectsCondition.TabIndex = 1;
             this.listBox_EffectsCondition.SelectedIndexChanged += new System.EventHandler(this.listBox_EffectsCondition_SelectedIndexChanged);
+            // 
+            // tableLayoutPanel14
+            // 
+            this.tableLayoutPanel14.ColumnCount = 1;
+            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel14.Controls.Add(this.listBox_ConditionsSettings, 0, 0);
+            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel16, 0, 1);
+            this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel14.Location = new System.Drawing.Point(198, 238);
+            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
+            this.tableLayoutPanel14.RowCount = 2;
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(190, 138);
+            this.tableLayoutPanel14.TabIndex = 3;
+            // 
+            // listBox_ConditionsSettings
+            // 
+            this.listBox_ConditionsSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox_ConditionsSettings.FormattingEnabled = true;
+            this.listBox_ConditionsSettings.Location = new System.Drawing.Point(3, 3);
+            this.listBox_ConditionsSettings.Name = "listBox_ConditionsSettings";
+            this.listBox_ConditionsSettings.Size = new System.Drawing.Size(184, 98);
+            this.listBox_ConditionsSettings.TabIndex = 0;
+            this.listBox_ConditionsSettings.SelectedIndexChanged += new System.EventHandler(this.listBox_ConditionsSettings_SelectedIndexChanged);
+            // 
+            // tableLayoutPanel16
+            // 
+            this.tableLayoutPanel16.ColumnCount = 3;
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.87218F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.12782F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 51F));
+            this.tableLayoutPanel16.Controls.Add(this.textBox_EffectsCondtionsValueType, 0, 0);
+            this.tableLayoutPanel16.Controls.Add(this.textBox_EffectsCondtionsValue, 1, 0);
+            this.tableLayoutPanel16.Controls.Add(this.button_SaveConditionsSettings, 2, 0);
+            this.tableLayoutPanel16.Location = new System.Drawing.Point(3, 107);
+            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
+            this.tableLayoutPanel16.RowCount = 1;
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(184, 28);
+            this.tableLayoutPanel16.TabIndex = 0;
+            // 
+            // textBox_EffectsCondtionsValueType
+            // 
+            this.textBox_EffectsCondtionsValueType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_EffectsCondtionsValueType.Location = new System.Drawing.Point(3, 3);
+            this.textBox_EffectsCondtionsValueType.Name = "textBox_EffectsCondtionsValueType";
+            this.textBox_EffectsCondtionsValueType.ReadOnly = true;
+            this.textBox_EffectsCondtionsValueType.Size = new System.Drawing.Size(59, 20);
+            this.textBox_EffectsCondtionsValueType.TabIndex = 4;
+            // 
+            // textBox_EffectsCondtionsValue
+            // 
+            this.textBox_EffectsCondtionsValue.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_EffectsCondtionsValue.Location = new System.Drawing.Point(68, 3);
+            this.textBox_EffectsCondtionsValue.Name = "textBox_EffectsCondtionsValue";
+            this.textBox_EffectsCondtionsValue.Size = new System.Drawing.Size(61, 20);
+            this.textBox_EffectsCondtionsValue.TabIndex = 3;
+            // 
+            // button_SaveConditionsSettings
+            // 
+            this.button_SaveConditionsSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_SaveConditionsSettings.Location = new System.Drawing.Point(135, 3);
+            this.button_SaveConditionsSettings.Name = "button_SaveConditionsSettings";
+            this.button_SaveConditionsSettings.Size = new System.Drawing.Size(46, 22);
+            this.button_SaveConditionsSettings.TabIndex = 5;
+            this.button_SaveConditionsSettings.Text = "Save";
+            this.button_SaveConditionsSettings.UseVisualStyleBackColor = true;
+            this.button_SaveConditionsSettings.Click += new System.EventHandler(this.button_SaveConditionsSettings_Click);
             // 
             // tableLayoutPanel5
             // 
@@ -631,11 +692,12 @@
             // button_SaveWave
             // 
             this.button_SaveWave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_SaveWave.Enabled = false;
             this.button_SaveWave.Location = new System.Drawing.Point(340, 3);
             this.button_SaveWave.Name = "button_SaveWave";
             this.button_SaveWave.Size = new System.Drawing.Size(84, 23);
             this.button_SaveWave.TabIndex = 1;
-            this.button_SaveWave.Text = "SaveWave";
+            this.button_SaveWave.Text = "SaveEgg";
             this.button_SaveWave.UseVisualStyleBackColor = true;
             this.button_SaveWave.Click += new System.EventHandler(this.button_SaveWave_Click);
             // 
@@ -662,11 +724,12 @@
             // button_LoadWave
             // 
             this.button_LoadWave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_LoadWave.Enabled = false;
             this.button_LoadWave.Location = new System.Drawing.Point(430, 3);
             this.button_LoadWave.Name = "button_LoadWave";
             this.button_LoadWave.Size = new System.Drawing.Size(84, 23);
             this.button_LoadWave.TabIndex = 0;
-            this.button_LoadWave.Text = "LoadWave";
+            this.button_LoadWave.Text = "LoadEgg";
             this.button_LoadWave.UseVisualStyleBackColor = true;
             this.button_LoadWave.Click += new System.EventHandler(this.button_LoadWave_Click);
             // 
@@ -689,67 +752,6 @@
             this.button_WavePfadeFinder.UseVisualStyleBackColor = true;
             this.button_WavePfadeFinder.Click += new System.EventHandler(this.button_WavePfadeFinder_Click);
             // 
-            // listBox_ConditionsSettings
-            // 
-            this.listBox_ConditionsSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox_ConditionsSettings.FormattingEnabled = true;
-            this.listBox_ConditionsSettings.Location = new System.Drawing.Point(3, 3);
-            this.listBox_ConditionsSettings.Name = "listBox_ConditionsSettings";
-            this.listBox_ConditionsSettings.Size = new System.Drawing.Size(184, 98);
-            this.listBox_ConditionsSettings.TabIndex = 0;
-            this.listBox_ConditionsSettings.SelectedIndexChanged += new System.EventHandler(this.listBox_ConditionsSettings_SelectedIndexChanged);
-            // 
-            // textBox_EffectsCondtionsValueType
-            // 
-            this.textBox_EffectsCondtionsValueType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox_EffectsCondtionsValueType.Location = new System.Drawing.Point(3, 3);
-            this.textBox_EffectsCondtionsValueType.Name = "textBox_EffectsCondtionsValueType";
-            this.textBox_EffectsCondtionsValueType.ReadOnly = true;
-            this.textBox_EffectsCondtionsValueType.Size = new System.Drawing.Size(59, 20);
-            this.textBox_EffectsCondtionsValueType.TabIndex = 4;
-            // 
-            // button_SaveConditionsSettings
-            // 
-            this.button_SaveConditionsSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_SaveConditionsSettings.Location = new System.Drawing.Point(136, 3);
-            this.button_SaveConditionsSettings.Name = "button_SaveConditionsSettings";
-            this.button_SaveConditionsSettings.Size = new System.Drawing.Size(45, 22);
-            this.button_SaveConditionsSettings.TabIndex = 5;
-            this.button_SaveConditionsSettings.Text = "Save";
-            this.button_SaveConditionsSettings.UseVisualStyleBackColor = true;
-            this.button_SaveConditionsSettings.Click += new System.EventHandler(this.button_SaveConditionsSettings_Click);
-            // 
-            // tableLayoutPanel14
-            // 
-            this.tableLayoutPanel14.ColumnCount = 1;
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel14.Controls.Add(this.listBox_ConditionsSettings, 0, 0);
-            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel16, 0, 1);
-            this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel14.Location = new System.Drawing.Point(198, 238);
-            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
-            this.tableLayoutPanel14.RowCount = 2;
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(190, 138);
-            this.tableLayoutPanel14.TabIndex = 3;
-            // 
-            // tableLayoutPanel16
-            // 
-            this.tableLayoutPanel16.ColumnCount = 3;
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.87218F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.12782F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel16.Controls.Add(this.textBox_EffectsCondtionsValueType, 0, 0);
-            this.tableLayoutPanel16.Controls.Add(this.textBox_EffectsCondtionsValue, 1, 0);
-            this.tableLayoutPanel16.Controls.Add(this.button_SaveConditionsSettings, 2, 0);
-            this.tableLayoutPanel16.Location = new System.Drawing.Point(3, 107);
-            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
-            this.tableLayoutPanel16.RowCount = 1;
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(184, 28);
-            this.tableLayoutPanel16.TabIndex = 0;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -771,17 +773,17 @@
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel15.ResumeLayout(false);
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel13.ResumeLayout(false);
             this.tableLayoutPanel13.PerformLayout();
-            this.tableLayoutPanel15.ResumeLayout(false);
+            this.tableLayoutPanel14.ResumeLayout(false);
+            this.tableLayoutPanel16.ResumeLayout(false);
+            this.tableLayoutPanel16.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
-            this.tableLayoutPanel14.ResumeLayout(false);
-            this.tableLayoutPanel16.ResumeLayout(false);
-            this.tableLayoutPanel16.PerformLayout();
             this.ResumeLayout(false);
 
         }
