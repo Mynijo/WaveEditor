@@ -891,6 +891,30 @@ namespace WaveEditor
                 button_save_WavePfadeFinder_Click(sender, e);
             button_SaveWave_Click(null, null);
         }
+
+        private void button_clear_Click(object sender, EventArgs e)
+        {
+            instances.Clear();
+
+            listBox_Enemys.Items.Clear();
+            listBox_EnemysSettings.Items.Clear();
+            listBox_Effects.Items.Clear();
+            listBox_EffectsSettings.Items.Clear();
+            listBox_EffectsCondition.Items.Clear();
+            listBox_ConditionsSettings.Items.Clear();
+
+            textBox_EggName.Text = "";
+            textBox_EnemysSettingsValue.Text = "";
+            textBox_EnemysSettingsValueType.Text = "";
+            textBox_EffectsSettingsValueType.Text = "";
+            textBox_EffectsSettingsValue.Text = "";
+            textBox_EffectsCondtionsValue.Text = "";
+            textBox_EffectsCondtionsValueType.Text = "";
+            numericUpDown_Tier.Value = 1;
+
+            checkBox_small_boss.Checked = false;
+            checkBox_Boss.Checked = false;
+        }
     }
 
     

@@ -81,6 +81,7 @@
             this.textBox_GamePfade = new System.Windows.Forms.TextBox();
             this.button_WavePfadeFinder = new System.Windows.Forms.Button();
             this.button_Save_as = new System.Windows.Forms.Button();
+            this.button_clear = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -669,21 +670,23 @@
             // 
             // tableLayoutPanel7
             // 
-            this.tableLayoutPanel7.ColumnCount = 7;
+            this.tableLayoutPanel7.ColumnCount = 8;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 74F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 47F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 317F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tableLayoutPanel7.Controls.Add(this.button_SaveWave, 2, 0);
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 293F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel7.Controls.Add(this.button_LoadGame, 1, 0);
             this.tableLayoutPanel7.Controls.Add(this.textBox_GamePfade, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.button_WavePfadeFinder, 6, 0);
-            this.tableLayoutPanel7.Controls.Add(this.textBox_WavePfade, 5, 0);
-            this.tableLayoutPanel7.Controls.Add(this.button_LoadWave, 4, 0);
-            this.tableLayoutPanel7.Controls.Add(this.button_Save_as, 3, 0);
+            this.tableLayoutPanel7.Controls.Add(this.button_clear, 2, 0);
+            this.tableLayoutPanel7.Controls.Add(this.button_WavePfadeFinder, 7, 0);
+            this.tableLayoutPanel7.Controls.Add(this.textBox_WavePfade, 6, 0);
+            this.tableLayoutPanel7.Controls.Add(this.button_LoadWave, 5, 0);
+            this.tableLayoutPanel7.Controls.Add(this.button_Save_as, 4, 0);
+            this.tableLayoutPanel7.Controls.Add(this.button_SaveWave, 3, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -694,11 +697,10 @@
             // 
             // button_SaveWave
             // 
-            this.button_SaveWave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_SaveWave.Enabled = false;
-            this.button_SaveWave.Location = new System.Drawing.Point(321, 3);
+            this.button_SaveWave.Location = new System.Drawing.Point(345, 3);
             this.button_SaveWave.Name = "button_SaveWave";
-            this.button_SaveWave.Size = new System.Drawing.Size(41, 23);
+            this.button_SaveWave.Size = new System.Drawing.Size(42, 23);
             this.button_SaveWave.TabIndex = 1;
             this.button_SaveWave.Text = "Save";
             this.button_SaveWave.UseVisualStyleBackColor = true;
@@ -706,17 +708,16 @@
             // 
             // textBox_WavePfade
             // 
-            this.textBox_WavePfade.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox_WavePfade.ForeColor = System.Drawing.Color.Black;
-            this.textBox_WavePfade.Location = new System.Drawing.Point(447, 3);
+            this.textBox_WavePfade.Location = new System.Drawing.Point(473, 3);
             this.textBox_WavePfade.Name = "textBox_WavePfade";
-            this.textBox_WavePfade.Size = new System.Drawing.Size(311, 20);
+            this.textBox_WavePfade.Size = new System.Drawing.Size(287, 20);
             this.textBox_WavePfade.TabIndex = 2;
             // 
             // button_LoadGame
             // 
             this.button_LoadGame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_LoadGame.Location = new System.Drawing.Point(247, 3);
+            this.button_LoadGame.Location = new System.Drawing.Point(227, 3);
             this.button_LoadGame.Name = "button_LoadGame";
             this.button_LoadGame.Size = new System.Drawing.Size(68, 23);
             this.button_LoadGame.TabIndex = 3;
@@ -726,9 +727,8 @@
             // 
             // button_LoadWave
             // 
-            this.button_LoadWave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_LoadWave.Enabled = false;
-            this.button_LoadWave.Location = new System.Drawing.Point(401, 3);
+            this.button_LoadWave.Location = new System.Drawing.Point(427, 3);
             this.button_LoadWave.Name = "button_LoadWave";
             this.button_LoadWave.Size = new System.Drawing.Size(40, 23);
             this.button_LoadWave.TabIndex = 0;
@@ -741,15 +741,16 @@
             this.textBox_GamePfade.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox_GamePfade.Location = new System.Drawing.Point(3, 3);
             this.textBox_GamePfade.Name = "textBox_GamePfade";
-            this.textBox_GamePfade.Size = new System.Drawing.Size(238, 20);
+            this.textBox_GamePfade.Size = new System.Drawing.Size(218, 20);
             this.textBox_GamePfade.TabIndex = 4;
             this.textBox_GamePfade.Text = "K:\\GitProjects\\DeepMines";
             // 
             // button_WavePfadeFinder
             // 
-            this.button_WavePfadeFinder.Location = new System.Drawing.Point(764, 3);
+            this.button_WavePfadeFinder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_WavePfadeFinder.Location = new System.Drawing.Point(766, 3);
             this.button_WavePfadeFinder.Name = "button_WavePfadeFinder";
-            this.button_WavePfadeFinder.Size = new System.Drawing.Size(24, 23);
+            this.button_WavePfadeFinder.Size = new System.Drawing.Size(25, 23);
             this.button_WavePfadeFinder.TabIndex = 5;
             this.button_WavePfadeFinder.Text = "...";
             this.button_WavePfadeFinder.UseVisualStyleBackColor = true;
@@ -759,13 +760,23 @@
             // 
             this.button_Save_as.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_Save_as.Enabled = false;
-            this.button_Save_as.Location = new System.Drawing.Point(368, 3);
+            this.button_Save_as.Location = new System.Drawing.Point(393, 3);
             this.button_Save_as.Name = "button_Save_as";
-            this.button_Save_as.Size = new System.Drawing.Size(27, 23);
+            this.button_Save_as.Size = new System.Drawing.Size(28, 23);
             this.button_Save_as.TabIndex = 6;
             this.button_Save_as.Text = "as";
             this.button_Save_as.UseVisualStyleBackColor = true;
             this.button_Save_as.Click += new System.EventHandler(this.button_Save_as_Click);
+            // 
+            // button_clear
+            // 
+            this.button_clear.Location = new System.Drawing.Point(301, 3);
+            this.button_clear.Name = "button_clear";
+            this.button_clear.Size = new System.Drawing.Size(38, 23);
+            this.button_clear.TabIndex = 7;
+            this.button_clear.Text = "clear";
+            this.button_clear.UseVisualStyleBackColor = true;
+            this.button_clear.Click += new System.EventHandler(this.button_clear_Click);
             // 
             // Form1
             // 
@@ -858,6 +869,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
         private System.Windows.Forms.Button button_Save_as;
+        private System.Windows.Forms.Button button_clear;
     }
 }
 
