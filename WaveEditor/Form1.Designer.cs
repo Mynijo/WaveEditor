@@ -80,6 +80,7 @@
             this.button_LoadWave = new System.Windows.Forms.Button();
             this.textBox_GamePfade = new System.Windows.Forms.TextBox();
             this.button_WavePfadeFinder = new System.Windows.Forms.Button();
+            this.button_Save_as = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -530,7 +531,7 @@
             this.tableLayoutPanel16.ColumnCount = 3;
             this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.87218F));
             this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.12782F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 51F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 52F));
             this.tableLayoutPanel16.Controls.Add(this.textBox_EffectsCondtionsValueType, 0, 0);
             this.tableLayoutPanel16.Controls.Add(this.textBox_EffectsCondtionsValue, 1, 0);
             this.tableLayoutPanel16.Controls.Add(this.button_SaveConditionsSettings, 2, 0);
@@ -547,13 +548,13 @@
             this.textBox_EffectsCondtionsValueType.Location = new System.Drawing.Point(3, 3);
             this.textBox_EffectsCondtionsValueType.Name = "textBox_EffectsCondtionsValueType";
             this.textBox_EffectsCondtionsValueType.ReadOnly = true;
-            this.textBox_EffectsCondtionsValueType.Size = new System.Drawing.Size(59, 20);
+            this.textBox_EffectsCondtionsValueType.Size = new System.Drawing.Size(58, 20);
             this.textBox_EffectsCondtionsValueType.TabIndex = 4;
             // 
             // textBox_EffectsCondtionsValue
             // 
             this.textBox_EffectsCondtionsValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox_EffectsCondtionsValue.Location = new System.Drawing.Point(68, 3);
+            this.textBox_EffectsCondtionsValue.Location = new System.Drawing.Point(67, 3);
             this.textBox_EffectsCondtionsValue.Name = "textBox_EffectsCondtionsValue";
             this.textBox_EffectsCondtionsValue.Size = new System.Drawing.Size(61, 20);
             this.textBox_EffectsCondtionsValue.TabIndex = 3;
@@ -561,9 +562,9 @@
             // button_SaveConditionsSettings
             // 
             this.button_SaveConditionsSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_SaveConditionsSettings.Location = new System.Drawing.Point(135, 3);
+            this.button_SaveConditionsSettings.Location = new System.Drawing.Point(134, 3);
             this.button_SaveConditionsSettings.Name = "button_SaveConditionsSettings";
-            this.button_SaveConditionsSettings.Size = new System.Drawing.Size(46, 22);
+            this.button_SaveConditionsSettings.Size = new System.Drawing.Size(47, 22);
             this.button_SaveConditionsSettings.TabIndex = 5;
             this.button_SaveConditionsSettings.Text = "Save";
             this.button_SaveConditionsSettings.UseVisualStyleBackColor = true;
@@ -668,19 +669,21 @@
             // 
             // tableLayoutPanel7
             // 
-            this.tableLayoutPanel7.ColumnCount = 6;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.ColumnCount = 7;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 74F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 47F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 317F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel7.Controls.Add(this.button_SaveWave, 2, 0);
-            this.tableLayoutPanel7.Controls.Add(this.textBox_WavePfade, 4, 0);
             this.tableLayoutPanel7.Controls.Add(this.button_LoadGame, 1, 0);
-            this.tableLayoutPanel7.Controls.Add(this.button_LoadWave, 3, 0);
             this.tableLayoutPanel7.Controls.Add(this.textBox_GamePfade, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.button_WavePfadeFinder, 5, 0);
+            this.tableLayoutPanel7.Controls.Add(this.button_WavePfadeFinder, 6, 0);
+            this.tableLayoutPanel7.Controls.Add(this.textBox_WavePfade, 5, 0);
+            this.tableLayoutPanel7.Controls.Add(this.button_LoadWave, 4, 0);
+            this.tableLayoutPanel7.Controls.Add(this.button_Save_as, 3, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -693,11 +696,11 @@
             // 
             this.button_SaveWave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_SaveWave.Enabled = false;
-            this.button_SaveWave.Location = new System.Drawing.Point(340, 3);
+            this.button_SaveWave.Location = new System.Drawing.Point(321, 3);
             this.button_SaveWave.Name = "button_SaveWave";
-            this.button_SaveWave.Size = new System.Drawing.Size(84, 23);
+            this.button_SaveWave.Size = new System.Drawing.Size(41, 23);
             this.button_SaveWave.TabIndex = 1;
-            this.button_SaveWave.Text = "SaveEgg";
+            this.button_SaveWave.Text = "Save";
             this.button_SaveWave.UseVisualStyleBackColor = true;
             this.button_SaveWave.Click += new System.EventHandler(this.button_SaveWave_Click);
             // 
@@ -705,17 +708,17 @@
             // 
             this.textBox_WavePfade.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox_WavePfade.ForeColor = System.Drawing.Color.Black;
-            this.textBox_WavePfade.Location = new System.Drawing.Point(520, 3);
+            this.textBox_WavePfade.Location = new System.Drawing.Point(447, 3);
             this.textBox_WavePfade.Name = "textBox_WavePfade";
-            this.textBox_WavePfade.Size = new System.Drawing.Size(241, 20);
+            this.textBox_WavePfade.Size = new System.Drawing.Size(311, 20);
             this.textBox_WavePfade.TabIndex = 2;
             // 
             // button_LoadGame
             // 
             this.button_LoadGame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_LoadGame.Location = new System.Drawing.Point(250, 3);
+            this.button_LoadGame.Location = new System.Drawing.Point(247, 3);
             this.button_LoadGame.Name = "button_LoadGame";
-            this.button_LoadGame.Size = new System.Drawing.Size(84, 23);
+            this.button_LoadGame.Size = new System.Drawing.Size(68, 23);
             this.button_LoadGame.TabIndex = 3;
             this.button_LoadGame.Text = "LoadGame";
             this.button_LoadGame.UseVisualStyleBackColor = true;
@@ -725,11 +728,11 @@
             // 
             this.button_LoadWave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_LoadWave.Enabled = false;
-            this.button_LoadWave.Location = new System.Drawing.Point(430, 3);
+            this.button_LoadWave.Location = new System.Drawing.Point(401, 3);
             this.button_LoadWave.Name = "button_LoadWave";
-            this.button_LoadWave.Size = new System.Drawing.Size(84, 23);
+            this.button_LoadWave.Size = new System.Drawing.Size(40, 23);
             this.button_LoadWave.TabIndex = 0;
-            this.button_LoadWave.Text = "LoadEgg";
+            this.button_LoadWave.Text = "Load";
             this.button_LoadWave.UseVisualStyleBackColor = true;
             this.button_LoadWave.Click += new System.EventHandler(this.button_LoadWave_Click);
             // 
@@ -738,19 +741,31 @@
             this.textBox_GamePfade.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox_GamePfade.Location = new System.Drawing.Point(3, 3);
             this.textBox_GamePfade.Name = "textBox_GamePfade";
-            this.textBox_GamePfade.Size = new System.Drawing.Size(241, 20);
+            this.textBox_GamePfade.Size = new System.Drawing.Size(238, 20);
             this.textBox_GamePfade.TabIndex = 4;
             this.textBox_GamePfade.Text = "K:\\GitProjects\\DeepMines";
             // 
             // button_WavePfadeFinder
             // 
-            this.button_WavePfadeFinder.Location = new System.Drawing.Point(767, 3);
+            this.button_WavePfadeFinder.Location = new System.Drawing.Point(764, 3);
             this.button_WavePfadeFinder.Name = "button_WavePfadeFinder";
             this.button_WavePfadeFinder.Size = new System.Drawing.Size(24, 23);
             this.button_WavePfadeFinder.TabIndex = 5;
             this.button_WavePfadeFinder.Text = "...";
             this.button_WavePfadeFinder.UseVisualStyleBackColor = true;
             this.button_WavePfadeFinder.Click += new System.EventHandler(this.button_WavePfadeFinder_Click);
+            // 
+            // button_Save_as
+            // 
+            this.button_Save_as.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_Save_as.Enabled = false;
+            this.button_Save_as.Location = new System.Drawing.Point(368, 3);
+            this.button_Save_as.Name = "button_Save_as";
+            this.button_Save_as.Size = new System.Drawing.Size(27, 23);
+            this.button_Save_as.TabIndex = 6;
+            this.button_Save_as.Text = "as";
+            this.button_Save_as.UseVisualStyleBackColor = true;
+            this.button_Save_as.Click += new System.EventHandler(this.button_Save_as_Click);
             // 
             // Form1
             // 
@@ -842,6 +857,7 @@
         private System.Windows.Forms.ListBox listBox_ConditionsSettings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
+        private System.Windows.Forms.Button button_Save_as;
     }
 }
 

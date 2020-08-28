@@ -217,7 +217,8 @@ namespace WaveEditor
             comboBox_EffectsCondtion.SelectedIndex = 0;
 
             button_LoadWave.Enabled = true;
-            button_SaveWave.Enabled = true;
+            button_SaveWave.Enabled = true; 
+            button_Save_as.Enabled = true;
         }
 
 
@@ -884,8 +885,12 @@ namespace WaveEditor
             }
         }
 
-
-
+        private void button_Save_as_Click(object sender, EventArgs e)
+        {
+            if (textBox_WavePfade.Text != "")
+                button_save_WavePfadeFinder_Click(sender, e);
+            button_SaveWave_Click(null, null);
+        }
     }
 
     
